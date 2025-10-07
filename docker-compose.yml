@@ -1,0 +1,12 @@
+---
+services:
+  app:
+    build: .
+    environment:
+      TELEGRAM_BOT_TOKEN: "${TELEGRAM_BOT_TOKEN}"
+      TELEGRAM_CHAT_ID: "${TELEGRAM_CHAT_ID}"
+      USERNAME: "${USERNAME}"
+      PASSWORD: "${PASSWORD}"
+    volumes:
+    - ${DATA_PATH}:/data
+    - .:/code
