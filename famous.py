@@ -10,6 +10,7 @@ class FamousPerson(BaseModel):
     default_text: str = "Día {day}: esperando con ilusión que {name} pueda enviar un 'feliz cumpleaños' a mi futura esposa Adriana. Sería el regalo de su vida. 💕"
     start_day: datetime = datetime.now()
     post_url: str = ""
+    file_name: str = ""
 
     @classmethod
     def load(cls, config_file) -> 'BaseModel':
@@ -21,11 +22,11 @@ class FamousPerson(BaseModel):
         new_config =  cls.parse_obj(config)
         return new_config
 
-    def save(self, config_file):
+    def save(self):
         """
         Save config to file
         """
-        with open(config_file, "w") as f:
+        with open(self.file_name, "w") as f:
             yaml.dump(self.dict(), f, default_flow_style=False)
 
     def get_daily_text(self) -> str:
@@ -44,5 +45,7 @@ class FamousLoader:
         for file in os.listdir(self.FAMOUS_FOLDER):
             if file.endswith(".yaml") or file.endswith(".yml"):
                 config_file = os.path.join(self.FAMOUS_FOLDER, file)
-                list_of_famous.append(FamousPerson.load(config_file))
+                famous = FamousPerson.load(config_file)
+                famous.file_name = config_file
+                list_of_famous.append()
         return list_of_famous

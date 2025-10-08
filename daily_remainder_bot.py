@@ -16,7 +16,7 @@ class DailyFamousInstagramRemainder:
                 last_post = self.client.get_latest_post(famous.instagram_user)
                 self.client.comment_on_post(last_post, famous.get_daily_text())
                 famous.post_url = last_post.code
-                famous.save(f"data/{famous.name}.yaml")
+                famous.save()
             except Exception as e:
                 print(f"Could not send message to {famous.instagram_user}: {e}")
             else:
