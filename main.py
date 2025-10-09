@@ -26,6 +26,7 @@ def main():
         notifier.notify(list_of_famous_to_notify)
         daily_remainder = DailyFamousInstagramRemainder(bot, list_of_famous)
         daily_remainder.send_remainders()
+        bot.client.dump_settings(session_path)
     except Exception as e:
         notifier.notify(f"Error: {e}")
     else:
