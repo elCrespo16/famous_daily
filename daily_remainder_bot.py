@@ -1,7 +1,9 @@
 from typing import List
 from famous import FamousPerson
 from instagram_bot import InstagramBot
+import logging
 
+logger = logging.getLogger(__name__)
 
 class DailyFamousInstagramRemainder:
 
@@ -18,6 +20,7 @@ class DailyFamousInstagramRemainder:
                 famous.post_url = last_post.code
                 famous.save()
             except Exception as e:
-                print(f"Could not send message to {famous.instagram_user}: {e}")
+                logger.error(f"Could not send message to {famous.instagram_user}: {e}")
+                raise
             else:
-                print(f"Message sent to {famous.instagram_user}")
+                logger.info(f"Message sent to {famous.instagram_user}")

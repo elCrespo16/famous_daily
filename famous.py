@@ -1,8 +1,12 @@
 from datetime import datetime
+from math import log
 from typing import List
 import yaml
 import os
 from pydantic import BaseModel
+import logging
+
+logger = logging.getLogger(__name__)
 
 class FamousPerson(BaseModel):
     name: str
@@ -17,6 +21,7 @@ class FamousPerson(BaseModel):
         """
         Load config from file
         """
+        logger.info(f"Loading config from {config_file}")
         with open(config_file) as f:
             config = yaml.load(f.read(), Loader=yaml.FullLoader)
         new_config =  cls.parse_obj(config)
@@ -26,6 +31,7 @@ class FamousPerson(BaseModel):
         """
         Save config to file
         """
+        logger.info(f"Saving config to {self.file_name}")
         with open(self.file_name, "w") as f:
             yaml.dump(self.dict(), f, default_flow_style=False)
 
@@ -34,6 +40,7 @@ class FamousPerson(BaseModel):
         Set the publication day in the text
         """
         day = (datetime.now() - self.start_day).days
+        logger.info(f"Calculating day {day} for {self.name}")
         return self.default_text.replace("{day}", str(day)).replace("{name}", self.name)
 
 class FamousLoader:
@@ -45,7 +52,8 @@ class FamousLoader:
         for file in os.listdir(self.FAMOUS_FOLDER):
             if file.endswith(".yaml") or file.endswith(".yml"):
                 config_file = os.path.join(self.FAMOUS_FOLDER, file)
+                logger.info(f"Loading famous person from {config_file}")
                 famous = FamousPerson.load(config_file)
                 famous.file_name = config_file
-                list_of_famous.append()
+                list_of_famous.append(famous)
         return list_of_famous
