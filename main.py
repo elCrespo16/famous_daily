@@ -1,3 +1,5 @@
+from random import randint
+from time import sleep
 from instagram_bot import InstagramBot
 from telegram import TelegramNotifier
 from pathlib import Path
@@ -16,6 +18,7 @@ session_path = Path("session.json")
 def main():
     notifier = TelegramNotifier()
     notifier.notify("Starting upload")
+    sleep(randint(30,600))
     try:
         bot = InstagramBot()
         famous_loader = FamousLoader()

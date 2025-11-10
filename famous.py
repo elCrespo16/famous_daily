@@ -1,6 +1,6 @@
 from datetime import datetime
-from math import log
-from typing import List
+from random import randint
+from typing import List, Optional
 import yaml
 import os
 from pydantic import BaseModel
@@ -11,7 +11,8 @@ logger = logging.getLogger(__name__)
 class FamousPerson(BaseModel):
     name: str
     instagram_user: str
-    default_text: str = "Día {day}: esperando con ilusión que {name} pueda enviar un 'feliz cumpleaños' a mi futura esposa Adriana. Sería el regalo de su vida. 💕"
+    default_text: str = "esperando con ilusión que {name} pueda enviar un 'feliz cumpleaños' a mi futura esposa Adriana. Sería el regalo de su vida. 💕"
+    custom_texts: Optional[List[str]]
     start_day: datetime = datetime.now()
     post_url: str = ""
     file_name: str = ""
@@ -41,7 +42,10 @@ class FamousPerson(BaseModel):
         """
         day = (datetime.now() - self.start_day).days
         logger.info(f"Calculating day {day} for {self.name}")
-        return self.default_text.replace("{day}", str(day)).replace("{name}", self.name)
+        if not self.custom_texts:
+            return f"Dia {day}: {self.default_text.replace("{day}", str(day)).replace("{name}", self.name)}"
+        else:
+            return f"Dia {day}: {self.custom_texts[randint(0, len(self.custom_texts) - 1)]}"
 
 class FamousLoader:
 
