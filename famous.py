@@ -11,10 +11,10 @@ logger = logging.getLogger(__name__)
 class FamousPerson(BaseModel):
     name: str
     instagram_user: str
-    default_text: str = "esperando con ilusión que {name} pueda enviar un 'feliz cumpleaños' a mi futura esposa Adriana. Sería el regalo de su vida. 💕"
+    default_text: str = "waiting for the day which {name} sends a 'Happy birthday message' to my future wife Adriana, it will be the gift of her life 💕"
     custom_texts: Optional[List[str]]
     start_day: datetime = datetime.now()
-    post_url: str = ""
+    post_url: Optional[str] = ""
     file_name: str = ""
 
     @classmethod
