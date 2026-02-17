@@ -17,8 +17,9 @@ session_path = Path("session.json")
 
 def main():
     notifier = TelegramNotifier()
-    notifier.notify("Starting upload")
-    sleep(randint(30,600))
+    sleep_time = randint(30,600)
+    notifier.notify(f"Starting upload with sleep time of {sleep_time} seconds")
+    sleep(sleep_time)
     try:
         bot = InstagramBot()
         famous_loader = FamousLoader()

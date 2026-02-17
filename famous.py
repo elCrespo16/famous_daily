@@ -43,7 +43,7 @@ class FamousPerson(BaseModel):
         day = (datetime.now() - self.start_day).days
         logger.info(f"Calculating day {day} for {self.name}")
         if not self.custom_texts:
-            return f"Dia {day}: {self.default_text.replace("{day}", str(day)).replace("{name}", self.name)}"
+            return f"Dia {day}: {self.default_text.replace('{day}', str(day)).replace('{name}', self.name)}"
         else:
             return f"Dia {day}: {self.custom_texts[randint(0, len(self.custom_texts) - 1)]}"
 
