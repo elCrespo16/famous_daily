@@ -22,9 +22,6 @@ class InstagramBot:
     def login(self):
         login_via_session = False
         login_via_pw = False
-        self.client.set_user_agent(
-            "Instagram 410.0.0.0.96 Android (33/13; 480dpi; 1080x2400; xiaomi; M2007J20CG; surya; qcom; en_US; 641123490)"
-        )
         session = self.client.load_settings(session_path) if session_path.exists() else None
 
         if session:
@@ -50,6 +47,9 @@ class InstagramBot:
                 logger.info("Couldn't login user using session information: %s" % e)
 
         if not login_via_session:
+            self.client.set_user_agent(
+                "Instagram 410.0.0.0.96 Android (33/13; 480dpi; 1080x2400; xiaomi; M2007J20CG; surya; qcom; en_US; 641123490)"
+            )
             try:
                 logger.info("Attempting to login via username and password. username: %s" % self.username)
                 if self.client.login(self.username, self.password):
