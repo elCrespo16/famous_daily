@@ -13,6 +13,7 @@ class DailyFamousInstagramRemainder:
         self.list_of_famous = list_of_famous
 
     def send_remainders(self) -> None:
+        errors = []
         for famous in self.list_of_famous:
             try:
                 last_post = self.client.get_latest_post(famous.instagram_user)
@@ -21,6 +22,8 @@ class DailyFamousInstagramRemainder:
                 famous.save()
             except Exception as e:
                 logger.error(f"Could not send message to {famous.instagram_user}: {e}")
-                raise
+                errors.append(famous.instagram_user)
             else:
                 logger.info(f"Message sent to {famous.instagram_user}")
+        if errors:
+            raise Exception(f"Failed to send messages to: {', '.join(errors)}")

@@ -59,6 +59,8 @@ class InstagramBot:
 
         if not login_via_pw and not login_via_session:
             raise Exception("Couldn't login user with either password or session")
+        else:
+            self.client.dump_settings(session_path)
 
     def get_latest_post(self, username: str):
         user_id = self.client.user_id_from_username(username)
